@@ -1,0 +1,37 @@
+.MbField
+	&__list
+		display: grid
+		width: 400px
+		height: 400px
+		grid-template: repeat(10, 1fr)/repeat(10, 1fr)
+
+	&__item
+		background: #fff
+		position: relative
+		display: flex
+		box-shadow: 0 0 0 1px #ccc
+
+		&_open
+			background: #ffdede
+
+			&:after
+				display: none
+
+		&_open:not(&_ship)
+			background: #fff
+
+			&:after
+				content: ''
+				display: block
+				height: 5px
+				width: 5px
+				background: #000
+				border-radius: 50%
+				margin: auto
+
+	&__inputs
+		margin-bottom: 20px
+
+		input, label
+			display: inline-block
+			margin-right: 10px
