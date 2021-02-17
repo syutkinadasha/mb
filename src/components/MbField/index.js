@@ -7,12 +7,12 @@ const mbRows = [1,2,3,4,5,6,7,8,9,10];
 const mbCols = ['a','b','c','d','e','f','g','h','i','j'];
 
 function mdFieldElements(ships) {
-	return mbRows.reduce((acc, rVal) => {
-		return [...acc, ...mbCols.map((cVal) => {
+	return mbRows.reduce((acc, rVal, rKey) => {
+		return [...acc, ...mbCols.map((cVal, cKey) => {
 			const itemId = `${cVal}${rVal}`;
 			return {
 				id: itemId,
-				ship: false,
+				ship: ships[cKey][rKey] === 2,
 				open: false,
 			}
 		})]
@@ -20,7 +20,6 @@ function mdFieldElements(ships) {
 }
 
 const MbField = () => {
-	const randomShips = getRandomShips();
 	const [elements, setElements] = useState([]);
 	const [col, setCol] = useState('');
 	const [row, setRow] = useState('');
@@ -45,7 +44,7 @@ const MbField = () => {
 	}, [col, row, elements])
 
 	useEffect(() => {
-		setElements(mdFieldElements(randomShips));
+		setElements(mdFieldElements(getRandomShips()));
 	}, [])
 
 	return (
@@ -55,16 +54,24 @@ const MbField = () => {
 				<label htmlFor="mbr">Row</label><input id="mbr" type="text" maxLength="2" size="1" onChange={(e) => onChange('row', e)} value={row}/>
 				<button type="button" onClick={onSubmit}>Отправить</button>
 			</div>
-			<div className="MbField__list">
-				{
-					elements.map((item) => {
-						return (
-							<div
-								key={item.id}
-								className={cn('MbField__item', {'MbField__item_open': item.open === true}, {'MbField__item_ship': item.ship === true})} />
-						)
-					})
-				}
+			<div className="MbField__list-wrap">
+				<div className="MbField__cols">
+					{ mbCols.map((col, key) => (<div key={`col_${key}`} className="MbField__cols-item">{col}</div>)) }
+				</div>
+				<div className="MbField__rows">
+					{ mbRows.map((row, key) => (<div key={`row_${key}`} className="MbField__rows-item">{row}</div>)) }
+				</div>
+				<div className="MbField__list">
+					{
+						elements.map((item) => {
+							return (
+								<div
+									key={item.id}
+									className={cn('MbField__item', {'MbField__item_open': item.open === true}, {'MbField__item_ship': item.ship === true && item.open === true})} />
+							)
+						})
+					}
+				</div>
 			</div>
 		</div>
 	)

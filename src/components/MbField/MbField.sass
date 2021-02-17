@@ -1,6 +1,28 @@
 .MbField
-	&__list
+	&__cols
 		display: grid
+		width: 400px
+		height: 30px
+		margin-left: 30px
+		grid-template-columns: repeat(10, 1fr)
+
+		&-item
+			align-self: center
+			justify-self: center
+
+	&__rows
+		display: inline-grid
+		height: 400px
+		width: 30px
+		grid-template-rows: repeat(10, 1fr)
+		vertical-align: top
+
+		&-item
+			align-self: center
+			justify-self: center
+
+	&__list
+		display: inline-grid
 		width: 400px
 		height: 400px
 		grid-template: repeat(10, 1fr)/repeat(10, 1fr)
